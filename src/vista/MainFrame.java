@@ -54,7 +54,7 @@ public class MainFrame extends javax.swing.JFrame {
     private void setupDashboardLayout() {
         // Configuración básica de ventana
         setResizable(true);
-        setSize(1200, 800);
+        setSize(1920, 1080);
         setLocationRelativeTo(null);
 
         // Remover el panel contenedor generado automáticamente
