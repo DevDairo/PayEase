@@ -153,12 +153,12 @@
         </Component>
         <Component class="javax.swing.JButton" name="jButton1">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Exportar PDF N&#xf3;mina"/>
+            <Property name="text" type="java.lang.String" value="Exportar"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="jButton2">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Exportar Todas las N&#xf3;minas"/>
+            <Property name="text" type="java.lang.String" value="Exportar todas las n&#xf3;minas"/>
           </Properties>
         </Component>
       </SubComponents>

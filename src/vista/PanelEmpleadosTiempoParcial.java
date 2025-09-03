@@ -53,9 +53,9 @@ public class PanelEmpleadosTiempoParcial extends javax.swing.JPanel {
 
         jLabel2.setText("Para exportar nomina en especifica, selecciona al empleado y presiona el boton");
 
-        jButton1.setText("Exportar PDF Nómina");
+        jButton1.setText("Exportar");
 
-        jButton2.setText("Exportar Todas las Nóminas");
+        jButton2.setText("Exportar todas las nóminas");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -64,7 +64,7 @@ public class PanelEmpleadosTiempoParcial extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton1)
                     .addComponent(jButton2))

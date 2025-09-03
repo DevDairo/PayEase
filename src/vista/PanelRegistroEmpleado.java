@@ -60,9 +60,10 @@ public class PanelRegistroEmpleado extends javax.swing.JPanel {
 
         jLabel5.setText("Tipo de contrato");
 
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione", "Contrato por obra o labor", "Contrato de trabajo a término fijo", "Contrato de trabajo a término indefinido", "Contrato de aprendizaje", "Contrato temporal, ocasional o accidental" }));
         jComboBox1.setToolTipText("");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Soltero/a", "Casado/a", "Compañero/a permanente" }));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione", "Soltero/a", "Casado/a", "Compañero/a permanente" }));
 
         jButton1.setText("Registrar");
 

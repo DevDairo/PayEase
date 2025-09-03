@@ -87,9 +87,9 @@ public class PanelEmpleadosTerminoFijo extends javax.swing.JPanel {
 
         jLabel2.setText("Para exportar nomina en especifica, selecciona al empleado y presiona el boton");
 
-        jButton1.setText("Exportar PDF Nómina");
+        jButton1.setText("Exportar");
 
-        jButton2.setText("Exportar Todas las Nóminas");
+        jButton2.setText("Exportar todas las nóminas");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
