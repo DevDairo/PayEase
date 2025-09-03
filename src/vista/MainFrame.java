@@ -11,8 +11,8 @@ public class MainFrame extends javax.swing.JFrame {
 
     private CardLayout cardLayout;
     private MenuPrincipalPanel menuPrincipalPanel;
-    private PanelEmpleadosTerminoFijo panelEmpleadosTerminoFijo;
-    private PanelEmpleadosTiempoParcial panelEmpleadosTiempoParcial;
+    private PanelEmpleadosFijo panelEmpleadosTerminoFijo;
+    private PanelEmpleadosServicios panelEmpleadosTiempoParcial;
     private PanelRegistroEmpleado panelRegistroEmpleado;
     private JPanel panelContenidoPrincipal; // Panel para el contenido que cambia
 
@@ -66,8 +66,8 @@ public class MainFrame extends javax.swing.JFrame {
 
         // Instanciar los paneles de contenido
         panelRegistroEmpleado = new PanelRegistroEmpleado(panelContenidoPrincipal, cardLayout);
-        panelEmpleadosTerminoFijo = new PanelEmpleadosTerminoFijo(panelContenidoPrincipal, cardLayout);
-        panelEmpleadosTiempoParcial = new PanelEmpleadosTiempoParcial(panelContenidoPrincipal, cardLayout);
+        panelEmpleadosTerminoFijo = new PanelEmpleadosFijo(panelContenidoPrincipal, cardLayout);
+        panelEmpleadosTiempoParcial = new PanelEmpleadosServicios(panelContenidoPrincipal, cardLayout);
 
         // Agregar paneles al CardLayout
         panelContenidoPrincipal.add(panelRegistroEmpleado, "registro");

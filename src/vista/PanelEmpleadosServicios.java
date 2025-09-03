@@ -3,12 +3,12 @@ package vista;
 import java.awt.CardLayout;
 import javax.swing.JPanel;
 
-public class PanelEmpleadosTiempoParcial extends javax.swing.JPanel {
+public class PanelEmpleadosServicios extends javax.swing.JPanel {
 
     private JPanel panelContenedor;
     private CardLayout cardLayout;
 
-    public PanelEmpleadosTiempoParcial(JPanel panelContenedor, CardLayout cardLayout) {
+    public PanelEmpleadosServicios(JPanel panelContenedor, CardLayout cardLayout) {
         initComponents();
 
         this.panelContenedor = panelContenedor;

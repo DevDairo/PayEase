@@ -1,4 +1,8 @@
 import vista.MainFrame;
+import modelo.EmpleadoIndefinido;
+import modelo.EmpleadoPrestacionServicios;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Clase principal del sistema de nómina
@@ -7,6 +11,10 @@ import vista.MainFrame;
 public class App {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(App.class.getName());
+    
+    // Listas para almacenar empleados en memoria (RAM)
+    public static List<EmpleadoIndefinido> empleadosIndefinidos = new ArrayList<>();
+    public static List<EmpleadoPrestacionServicios> empleadosPrestacionServicios = new ArrayList<>();
     
     public static void main(String[] args) {
         // Configurar Look and Feel

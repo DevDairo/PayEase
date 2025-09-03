@@ -1,77 +1,93 @@
 package modelo;
 
-import java.util.Date;
+/**
+ * Clase abstracta base para todos los tipos de empleados
+ * Implementa los principios de POO: Abstracción, Encapsulamiento, Herencia
+ * @author Enigma Group
+ */
+public abstract class Empleado {
 
-public class Empleado {
-
-    // Atributos básicos
+    // Atributos básicos comunes - SIN FECHAS
     private String nombre;
     private String identificacion;
     private String estadoCivil;
     private double salarioHora;
     private double horasTrabajadas;
     private double horasExtras;
-    private Date fechaIngreso;
-    private String tipoContrato;
     private String nivelAcademico;
 
-    // Constructor completo
+    // Constante para salario mínimo 2025
+    private static final double SMLMV_2025 = 1423500.0;
+
+    /**
+     * Constructor completo
+     */
     public Empleado(String nombre, String identificacion, String estadoCivil,
             double salarioHora, double horasTrabajadas, double horasExtras,
-            Date fechaIngreso, String tipoContrato, String nivelAcademico) {
+            String nivelAcademico) {
         this.nombre = nombre;
         this.identificacion = identificacion;
         this.estadoCivil = estadoCivil;
         this.salarioHora = salarioHora;
         this.horasTrabajadas = horasTrabajadas;
         this.horasExtras = horasExtras;
-        this.fechaIngreso = fechaIngreso;
-        this.tipoContrato = tipoContrato;
         this.nivelAcademico = nivelAcademico;
     }
 
-    // Constructor sin fecha (usa fecha actual)
-    public Empleado(String nombre, String identificacion, String estadoCivil,
-            double salarioHora, double horasTrabajadas, double horasExtras,
-            String tipoContrato, String nivelAcademico) {
-        this(nombre, identificacion, estadoCivil, salarioHora, horasTrabajadas,
-                horasExtras, new Date(), tipoContrato, nivelAcademico);
+    /**
+     * Constructor vacío
+     */
+    public Empleado() {
     }
 
+    // MÉTODOS ABSTRACTOS - cada subclase los implementa diferente
+    
     /**
-     * Método para calcular el salario bruto base
-     *
+     * Calcula el salario bruto según el tipo de empleado
      * @return Salario bruto calculado
      */
-    public double calcularSalarioBruto() {
-        double salarioNormal = salarioHora * horasTrabajadas;
-        double valorHorasExtras = calcularValorHorasExtras();
-        return salarioNormal + valorHorasExtras;
-    }
+    public abstract double calcularSalarioBruto();
 
     /**
+     * Determina si el empleado tiene prestaciones sociales
+     * @return true si tiene prestaciones, false si no
+     */
+    public abstract boolean aplicaPrestacionesSociales();
+
+    /**
+     * Determina si el empleado tiene auxilio de transporte
+     * @return true si tiene auxilio, false si no
+     */
+    public abstract boolean aplicaAuxilioTransporte();
+
+    /**
+     * Obtiene el tipo de contrato del empleado
+     * @return Tipo de contrato como String
+     */
+    public abstract String getTipoContrato();
+
+    // MÉTODOS CONCRETOS - comunes para todos los empleados
+    
+    /**
      * Calcula el valor de las horas extras con recargo del 25%
-     *
      * @return Valor total de horas extras
      */
     protected double calcularValorHorasExtras() {
-        // Hora extra diurna: valor hora * 1.25
         return horasExtras * (salarioHora * 1.25);
     }
 
     /**
-     * Método para obtener el IBC (Ingreso Base de Cotización)
-     *
+     * Calcula el IBC (Ingreso Base de Cotización)
+     * No puede ser menor al salario mínimo legal
      * @return IBC calculado
      */
     public double calcularIBC() {
         double salarioBruto = calcularSalarioBruto();
-        // El IBC no puede ser menor al salario mínimo
-        double salarioMinimo = 1300000; // SMLMV 2024 Colombia
-        return Math.max(salarioBruto, salarioMinimo);
+        return Math.max(salarioBruto, SMLMV_2025);
     }
 
-    // Getters y Setters
+    // GETTERS Y SETTERS
+    
     public String getNombre() {
         return nombre;
     }
@@ -120,22 +136,6 @@ public class Empleado {
         this.horasExtras = horasExtras;
     }
 
-    public Date getFechaIngreso() {
-        return fechaIngreso;
-    }
-
-    public void setFechaIngreso(Date fechaIngreso) {
-        this.fechaIngreso = fechaIngreso;
-    }
-
-    public String getTipoContrato() {
-        return tipoContrato;
-    }
-
-    public void setTipoContrato(String tipoContrato) {
-        this.tipoContrato = tipoContrato;
-    }
-
     public String getNivelAcademico() {
         return nivelAcademico;
     }
@@ -144,13 +144,18 @@ public class Empleado {
         this.nivelAcademico = nivelAcademico;
     }
 
+    public static double getSMLMV2025() {
+        return SMLMV_2025;
+    }
+
     @Override
     public String toString() {
-        return "Empleado{"
-                + "nombre='" + nombre + '\''
-                + ", identificacion='" + identificacion + '\''
-                + ", tipoContrato='" + tipoContrato + '\''
-                + ", salarioBruto=" + calcularSalarioBruto()
-                + '}';
+        return "Empleado{" +
+                "nombre='" + nombre + '\'' +
+                ", identificacion='" + identificacion + '\'' +
+                ", tipoContrato='" + getTipoContrato() + '\'' +
+                ", nivelAcademico='" + nivelAcademico + '\'' +
+                ", salarioBruto=" + calcularSalarioBruto() +
+                '}';
     }
 }
