@@ -13,7 +13,6 @@ public class PanelRegistroEmpleado extends javax.swing.JPanel {
     private CardLayout cardLayout;
     private final Nomina nominaManager;
 
-
     public PanelRegistroEmpleado(JPanel panelContenedor, CardLayout cardLayout, Nomina nominaManager) {
         initComponents();
         this.panelContenedor = panelContenedor;
@@ -75,7 +74,7 @@ public class PanelRegistroEmpleado extends javax.swing.JPanel {
             }
         });
 
-        estadoCivil.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Soltero/a", "Casado/a", " " }));
+        estadoCivil.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Soltero/a", "Casado/a" }));
         estadoCivil.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 estadoCivilActionPerformed(evt);
@@ -160,39 +159,49 @@ public class PanelRegistroEmpleado extends javax.swing.JPanel {
     }//GEN-LAST:event_estadoCivilActionPerformed
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
+    // 1. Capturar los datos del formulario
+    String nombreEmpleado = nombre.getText();
+    String tipoContratoSeleccionado = (String) tipoContrato.getSelectedItem();
+    String estadoCivilSeleccionado = (String) estadoCivil.getSelectedItem();
+    String horasTrabajadasStr = horasTrabajadas.getText();
 
-        // 1. Capturar los datos del formulario
-        String nombreEmpleado = nombre.getText();
-        String tipoContratoSeleccionado = (String) tipoContrato.getSelectedItem();
-        String estadoCivilSeleccionado = (String) estadoCivil.getSelectedItem();
-        String horasTrabajadasStr = horasTrabajadas.getText();
-
-        // 2. Validación de datos
-        try {
-            double horasTrabajadasValor = Double.parseDouble(horasTrabajadasStr);
-
-            // 3. Crear el objeto Empleado según el tipo de contrato
-            if ("Contrato de tiempo completo".equals(tipoContratoSeleccionado)) {
-                // Salario fijo según la normativa de 2025
-                double salarioFijo = 1423500.0;
-                EmpleadosCompletos empleadoCompleto = new EmpleadosCompletos(nombreEmpleado, estadoCivilSeleccionado, horasTrabajadasValor, salarioFijo);
-
-                // Ahora el botón pasa el objeto a la clase Nomina
-                nominaManager.registrarEmpleado(empleadoCompleto);
-                JOptionPane.showMessageDialog(null, "Empleado completo registrado con éxito.");
-
-            } else if ("Contrato de tiempo parcial".equals(tipoContratoSeleccionado)) {
-                // Valor de la hora ordinaria según la normativa de 2025
-                double salarioPorHora = 6189.0;
-                EmpleadoParcial empleadoParcial = new EmpleadoParcial(nombreEmpleado, estadoCivilSeleccionado, horasTrabajadasValor, salarioPorHora);
-                // Ahora el botón pasa el objeto a la clase Nomina
-                nominaManager.registrarEmpleado(empleadoParcial); // Descomenta esta línea
-                JOptionPane.showMessageDialog(null, "Empleado parcial registrado con éxito.");
-            }
-
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(null, "Error: Las horas trabajadas deben ser un número válido.", "Error de entrada", JOptionPane.ERROR_MESSAGE);
+    try {
+        // 2. Validar que todos los campos estén completos
+        if (nombreEmpleado.isEmpty() || tipoContratoSeleccionado == null || estadoCivilSeleccionado == null || horasTrabajadasStr.isEmpty()) {
+            throw new Exception("Faltan datos obligatorios");
         }
+
+        double horasTrabajadasValor = Double.parseDouble(horasTrabajadasStr);
+
+        // 3. Registrar según tipo de contrato
+        if ("Contrato de tiempo completo".equals(tipoContratoSeleccionado)) {
+            double salarioFijo = 1423500.0;
+            EmpleadosCompletos empleadoCompleto = new EmpleadosCompletos(nombreEmpleado, estadoCivilSeleccionado, horasTrabajadasValor, salarioFijo);
+            nominaManager.registrarEmpleado(empleadoCompleto);
+            JOptionPane.showMessageDialog(null, "Empleado completo registrado con éxito.");
+
+        } else if ("Contrato de tiempo parcial".equals(tipoContratoSeleccionado)) {
+            double salarioPorHora = 6189.0;
+            EmpleadoParcial empleadoParcial = new EmpleadoParcial(nombreEmpleado, estadoCivilSeleccionado, horasTrabajadasValor, salarioPorHora);
+            nominaManager.registrarEmpleado(empleadoParcial);
+            JOptionPane.showMessageDialog(null, "Empleado parcial registrado con éxito.");
+
+        } 
+
+        // 4. Limpiar formulario
+        nombre.setText("");
+        horasTrabajadas.setText("");
+        tipoContrato.setSelectedIndex(0);
+        estadoCivil.setSelectedIndex(0);
+
+    } catch (Exception ex) {
+        // Maneja tanto errores de conversión como campos vacíos
+        JOptionPane.showMessageDialog(null, "Error: Todos los campos deben estar completos y las horas deben ser un número válido.", "Error de entrada", JOptionPane.ERROR_MESSAGE);
+        nombre.setText("");
+        horasTrabajadas.setText("");
+        tipoContrato.setSelectedIndex(0);
+        estadoCivil.setSelectedIndex(0);
+    }
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -17,42 +17,41 @@ public class PanelEmpleadosCompleto extends javax.swing.JPanel {
     private final Nomina nominaManager;
 
     public PanelEmpleadosCompleto(JPanel panelContenedor, CardLayout cardLayout, Nomina nominaManager) {
-    initComponents();
-    this.panelContenedor = panelContenedor;
-    this.cardLayout = cardLayout;
-    this.nominaManager = nominaManager; // Asignar correctamente
-}
+        initComponents();
+        this.panelContenedor = panelContenedor;
+        this.cardLayout = cardLayout;
+        this.nominaManager = nominaManager; // Asignar correctamente
+    }
 
     // Dentro de la clase PanelEmpleadosCompleto o PanelEmpleadosParcial
-public void llenarTabla(Nomina nominaManager) {
-    DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
-    modelo.setRowCount(0); // Limpia la tabla para evitar datos duplicados
+    public void llenarTabla(Nomina nominaManager) {
+        DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
+        modelo.setRowCount(0); // Limpia la tabla para evitar datos duplicados
 
-    for (Empleado empleado : nominaManager.getListaEmpleados()) {
-        if (empleado instanceof EmpleadosCompletos) { // o EmpleadoParcial
-            EmpleadosCompletos empleadoCompleto = (EmpleadosCompletos) empleado;
-            // Añade los datos del empleado completo a la tabla
-            Object[] fila = {
-                empleadoCompleto.getNombre(),
-                "Tiempo Completo",
-                empleadoCompleto.getEstadoCivil(),
-                empleadoCompleto.getHorasTrabajadas(),
-                empleadoCompleto.calcularSalarioBruto()
-            };
-            modelo.addRow(fila);
+        for (Empleado empleado : nominaManager.getListaEmpleados()) {
+            if (empleado instanceof EmpleadosCompletos) { // o EmpleadoParcial
+                EmpleadosCompletos empleadoCompleto = (EmpleadosCompletos) empleado;
+                // Añade los datos del empleado completo a la tabla
+                Object[] fila = {
+                    empleadoCompleto.getNombre(),
+                    "Tiempo Completo",
+                    empleadoCompleto.getEstadoCivil(),
+                    empleadoCompleto.getHorasTrabajadas(),
+                    empleadoCompleto.calcularSalarioBruto()
+                };
+                modelo.addRow(fila);
+            }
         }
     }
-}
-    
-    
-@Override
-public void setVisible(boolean visible) {
-    super.setVisible(visible);
-    if (visible && nominaManager != null) {
-        llenarTabla(nominaManager);
+
+    @Override
+    public void setVisible(boolean visible) {
+        super.setVisible(visible);
+        if (visible && nominaManager != null) {
+            llenarTabla(nominaManager);
+        }
     }
-}    
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -172,36 +171,32 @@ public void setVisible(boolean visible) {
     }// </editor-fold>//GEN-END:initComponents
 
     private void exportarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportarBtnActionPerformed
-    int filaSeleccionada = tabla.getSelectedRow();
-    if (filaSeleccionada == -1) {
-        JOptionPane.showMessageDialog(null, "Selecciona un empleado para exportar.", "Advertencia", JOptionPane.WARNING_MESSAGE);
-        return;
-    }
-
-    String nombreEmpleado = (String) tabla.getValueAt(filaSeleccionada, 0);
-
-    // Busca el objeto Empleado en la lista de la clase Nomina
-    Empleado empleadoAExportar = null;
-    for (Empleado empleado : nominaManager.getListaEmpleados()) {
-        if (empleado.getNombre().equals(nombreEmpleado)) {
-            empleadoAExportar = empleado;
-            break;
+        int filaSeleccionada = tabla.getSelectedRow();
+        if (filaSeleccionada == -1) {
+            JOptionPane.showMessageDialog(null, "Selecciona un empleado para exportar.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            return;
         }
-    }
 
-    if (empleadoAExportar != null) {
-        // Asegúrate de que la clase Exportar esté en el paquete 'servicios'
-        Exportar exportar = new Exportar();
-        exportar.generarTXT(empleadoAExportar);
-        JOptionPane.showMessageDialog(null, "Archivo TXT generado con éxito para " + nombreEmpleado, "Exportación Exitosa", JOptionPane.INFORMATION_MESSAGE);
-    }
+        String nombreEmpleado = (String) tabla.getValueAt(filaSeleccionada, 0);
+
+        // Busca el objeto Empleado en la lista de la clase Nomina
+        Empleado empleadoAExportar = null;
+        for (Empleado empleado : nominaManager.getListaEmpleados()) {
+            if (empleado.getNombre().equals(nombreEmpleado)) {
+                empleadoAExportar = empleado;
+                break;
+            }
+        }
+
+        if (empleadoAExportar != null) {
+            // Asegúrate de que la clase Exportar esté en el paquete 'servicios'
+            Exportar exportar = new Exportar();
+            exportar.generarTXT(empleadoAExportar);
+            JOptionPane.showMessageDialog(null, "Archivo TXT generado con éxito para " + nombreEmpleado, "Exportación Exitosa", JOptionPane.INFORMATION_MESSAGE);
+        }
     }//GEN-LAST:event_exportarBtnActionPerformed
 
-    
-    
-    
-    
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton exportarBtn;
     private javax.swing.JLabel jLabel1;

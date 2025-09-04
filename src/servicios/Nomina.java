@@ -3,8 +3,6 @@ package servicios;
 import modelo.Empleado;
 import java.util.ArrayList;
 import java.util.List;
-import modelo.EmpleadoParcial; // Importar la clase EmpleadoParcial
-import modelo.EmpleadosCompletos; // Importar la clase EmpleadosCompletos
 
 
 public class Nomina {
@@ -27,10 +25,10 @@ public class Nomina {
             System.out.println("Salario bruto de " + empleado.getNombre() + ": $" + salarioBruto);
         }
     }
-    
-    // Dentro de la clase Nomina
+
+
     public List<Empleado> getListaEmpleados() {
-    return this.listaEmpleados;
+        return this.listaEmpleados;
     }
 
 }

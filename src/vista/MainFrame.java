@@ -17,9 +17,9 @@ public class MainFrame extends javax.swing.JFrame {
     private PanelRegistroEmpleado panelRegistroEmpleado;
     private JPanel panelContenidoPrincipal; // Panel para el contenido que cambia
 
-     // Crear la instancia de Nomina, que será compartida por todos los paneles
+    // Crear la instancia de Nomina, que será compartida por todos los paneles
     private Nomina nominaManager = new Nomina();
-    
+
     public MainFrame() {
         initComponents();
 
@@ -79,7 +79,7 @@ public class MainFrame extends javax.swing.JFrame {
         panelContenidoPrincipal.add(panelEmpleadosParcial, "parcial");
 
         // Crear dashboard (menú lateral)
-        menuPrincipalPanel = new MenuPrincipalPanel(panelContenidoPrincipal, cardLayout);
+        menuPrincipalPanel = new MenuPrincipalPanel(panelContenidoPrincipal, cardLayout, nominaManager);
         menuPrincipalPanel.setPreferredSize(new Dimension(280, 0)); // Ancho fijo
 
         // Configurar layout principal: Dashboard izquierda, contenido centro

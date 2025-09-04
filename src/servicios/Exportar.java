@@ -8,40 +8,48 @@ import modelo.EmpleadosCompletos;
 import modelo.EmpleadoParcial;
 
 public class Exportar {
-    
+
     // Método para formatear los números a dos decimales
     private static final DecimalFormat df = new DecimalFormat("0.00");
 
     public void generarTXT(Empleado empleado) {
         // Generar un nombre de archivo único para cada empleado
-        String nombreArchivo = empleado.getNombre().replace(" ", "_") + "_Nomina.txt";
-        
+        String nombreArchivo = "nominas/" + empleado.getNombre().replace(" ", "_") + "_Nomina.txt";
+
+        // Crear directorio si no existe
+        java.io.File directorio = new java.io.File("nominas");
+        if (!directorio.exists()) {
+            directorio.mkdirs();
+        }
+
         try (FileWriter writer = new FileWriter(nombreArchivo)) {
-            writer.write("--- Recibo de Nómina ---\n\n");
+            writer.write("=== RECIBO DE NÓMINA ===\n");
+            writer.write("Fecha: " + java.time.LocalDate.now() + "\n\n");
+            writer.write("DATOS DEL EMPLEADO:\n");
             writer.write("Nombre: " + empleado.getNombre() + "\n");
             writer.write("Estado Civil: " + empleado.getEstadoCivil() + "\n");
-            writer.write("Tipo de Contrato: ");
-            
-            // Determinar el tipo de empleado para la exportación
+            writer.write("Horas Trabajadas: " + empleado.getHorasTrabajadas() + " hrs\n");
+
+        // Agregar información específica del tipo de empleado
             if (empleado instanceof EmpleadosCompletos) {
-                writer.write("Tiempo Completo\n");
+                EmpleadosCompletos emp = (EmpleadosCompletos) empleado;
+                writer.write("Tipo de Contrato: Tiempo Completo\n");
+                writer.write("Salario Fijo Mensual: $" + df.format(emp.getSalarioFijo()) + "\n");
             } else if (empleado instanceof EmpleadoParcial) {
-                writer.write("Tiempo Parcial\n");
+                EmpleadoParcial emp = (EmpleadoParcial) empleado;
+                writer.write("Tipo de Contrato: Tiempo Parcial\n");
+                writer.write("Salario por Hora: $" + df.format(emp.getSalarioPorHora()) + "\n");
             }
-            
-            writer.write("Horas Trabajadas: " + empleado.getHorasTrabajadas() + "\n");
+
+            writer.write("\nCÁLCULOS:\n");
             writer.write("Salario Bruto: $" + df.format(empleado.calcularSalarioBruto()) + "\n");
-            
-            // La siguiente lógica es para el requisito pendiente de las deducciones de impuestos,
-            // que aún no hemos implementado. Puedes agregarla en el futuro.
-            
-            writer.write("\n*** Este recibo no incluye deducciones de impuestos. ***\n");
-            
-            writer.flush();
-            System.out.println("Archivo " + nombreArchivo + " creado correctamente.");
-            
+            writer.write("\n*** Este recibo no incluye deducciones. ***\n");
+            writer.write("=".repeat(45) + "\n");
+            System.out.println("✓ Archivo generado: " + nombreArchivo);
+
         } catch (IOException e) {
-            System.err.println("Error al escribir el archivo: " + e.getMessage());
+            System.err.println("✗ Error al generar archivo: " + e.getMessage());
+            throw new RuntimeException("Error al generar archivo TXT", e);
         }
     }
 }

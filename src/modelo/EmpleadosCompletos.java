@@ -4,8 +4,6 @@ package modelo;
  *
  * @author Enigma Group
  */
-
-
 public class EmpleadosCompletos extends Empleado {
 
     // Atributo específico para empleados de tiempo completo
@@ -17,7 +15,7 @@ public class EmpleadosCompletos extends Empleado {
         super(nombre, estadoCivil, horasTrabajadas);
         this.salarioFijo = salarioFijo;
     }
-    
+
     // Implementación del método abstracto de la clase Empleado
     @Override
     public double calcularSalarioBruto() {

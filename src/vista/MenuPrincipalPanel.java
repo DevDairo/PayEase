@@ -6,23 +6,17 @@ import javax.swing.JPanel;
 import servicios.Nomina;
 import vista.PanelEmpleadosCompleto;
 
-
 public class MenuPrincipalPanel extends javax.swing.JPanel {
 
     private JPanel panelContenedor;
     private CardLayout cardLayout;
     private Nomina nominaManager;
 
-
-
-    public MenuPrincipalPanel(JPanel panelContenedor, CardLayout cardLayout) {
-
-        this.panelContenedor = panelContenedor;
-
-        initComponents();
+    public MenuPrincipalPanel(JPanel panelContenedor, CardLayout cardLayout, Nomina nominaManager) {
         this.panelContenedor = panelContenedor;
         this.cardLayout = cardLayout;
-
+        this.nominaManager = nominaManager; // AGREGAR esta línea
+        initComponents();
     }
 
     // Método para navegar entre paneles - úsalo en tus botones
@@ -111,26 +105,31 @@ public class MenuPrincipalPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistroActionPerformed
-    cardLayout.show(panelContenedor,"registro");
+        cardLayout.show(panelContenedor, "registro");
     }//GEN-LAST:event_btnRegistroActionPerformed
 
     private void btnFijoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFijoActionPerformed
- // Actualizar la tabla antes de mostrar
-    Component comp = panelContenedor.getComponent(1); // índice del panel completo
-    if (comp instanceof PanelEmpleadosCompleto) {
-        ((PanelEmpleadosCompleto) comp).llenarTabla(nominaManager);
-    }
-    cardLayout.show(panelContenedor, "fijo");
-
+        cardLayout.show(panelContenedor, "fijo");
+        // Buscar y actualizar el panel después de mostrarlo
+        for (int i = 0; i < panelContenedor.getComponentCount(); i++) {
+            java.awt.Component comp = panelContenedor.getComponent(i);
+            if (comp instanceof PanelEmpleadosCompleto) {
+                ((PanelEmpleadosCompleto) comp).llenarTabla(nominaManager);
+                break;
+            }
+        }
     }//GEN-LAST:event_btnFijoActionPerformed
 
     private void btnParcialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnParcialActionPerformed
-    // Actualizar la tabla antes de mostrar
-    Component comp = panelContenedor.getComponent(2); // índice del panel parcial
-    if (comp instanceof PanelEmpleadosParcial) {
-        ((PanelEmpleadosParcial) comp).llenarTabla(nominaManager);
-    }
-    cardLayout.show(panelContenedor, "parcial");
+        cardLayout.show(panelContenedor, "parcial");
+        // Buscar y actualizar el panel después de mostrarlo
+        for (int i = 0; i < panelContenedor.getComponentCount(); i++) {
+            java.awt.Component comp = panelContenedor.getComponent(i);
+            if (comp instanceof PanelEmpleadosParcial) {
+                ((PanelEmpleadosParcial) comp).llenarTabla(nominaManager);
+                break;
+            }
+        }
     }//GEN-LAST:event_btnParcialActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
