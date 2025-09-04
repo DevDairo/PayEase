@@ -13,17 +13,16 @@ public class PanelEmpleadosParcial extends javax.swing.JPanel {
 
     private JPanel panelContenedor;
     private CardLayout cardLayout;
-    private Nomina nominaManager;
+    private final Nomina nominaManager;
 
-
-    public PanelEmpleadosParcial(JPanel panelContenedor, CardLayout cardLayout, Nomina nominaManager1) {
-        initComponents();
-
-        this.panelContenedor = panelContenedor;
-        this.cardLayout = cardLayout;
-        this.nominaManager = nominaManager;
-    }
-
+    public PanelEmpleadosParcial(JPanel panelContenedor, CardLayout cardLayout, Nomina nominaManager) {
+    initComponents();
+    this.panelContenedor = panelContenedor;
+    this.cardLayout = cardLayout;
+    this.nominaManager = nominaManager; // Asignar correctamente
+}
+    
+    
 // ... dentro de la clase PanelEmpleadosParcial
 public void llenarTabla(Nomina nominaManager) {
     DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
@@ -45,7 +44,16 @@ public void llenarTabla(Nomina nominaManager) {
     }
 }
     
-    
+
+@Override
+public void setVisible(boolean visible) {
+    super.setVisible(visible);
+    if (visible && nominaManager != null) {
+        llenarTabla(nominaManager);
+    }
+}
+
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -115,7 +123,7 @@ public void llenarTabla(Nomina nominaManager) {
 
             },
             new String [] {
-                "Nombre", "Nivel académico"
+                "Nombre", "Tipo Contrato", "Estado Civil", "Horas Trabajadas", "Salario Bruto"
             }
         ));
         jScrollPane1.setViewportView(tabla);

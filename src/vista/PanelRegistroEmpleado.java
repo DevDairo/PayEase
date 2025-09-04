@@ -11,15 +11,14 @@ public class PanelRegistroEmpleado extends javax.swing.JPanel {
 
     private JPanel panelContenedor;
     private CardLayout cardLayout;
-    private Nomina nominaManager;
+    private final Nomina nominaManager;
 
-    public PanelRegistroEmpleado(JPanel panelContenedor, CardLayout cardLayout, Nomina nominaManager1) {
+
+    public PanelRegistroEmpleado(JPanel panelContenedor, CardLayout cardLayout, Nomina nominaManager) {
         initComponents();
-
         this.panelContenedor = panelContenedor;
         this.cardLayout = cardLayout;
-        this.nominaManager = new Nomina(); // 2. Inicializa la instancia en el constructor
-
+        this.nominaManager = nominaManager; // USAR el parámetro, NO crear nuevo
     }
 
     @SuppressWarnings("unchecked")

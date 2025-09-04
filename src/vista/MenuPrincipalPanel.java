@@ -1,13 +1,17 @@
 package vista;
 
 import java.awt.CardLayout;
+import java.awt.Component;
 import javax.swing.JPanel;
+import servicios.Nomina;
+import vista.PanelEmpleadosCompleto;
 
 
 public class MenuPrincipalPanel extends javax.swing.JPanel {
 
     private JPanel panelContenedor;
     private CardLayout cardLayout;
+    private Nomina nominaManager;
 
 
 
@@ -111,11 +115,22 @@ public class MenuPrincipalPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnRegistroActionPerformed
 
     private void btnFijoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFijoActionPerformed
-    cardLayout.show(panelContenedor,"fijo");
+ // Actualizar la tabla antes de mostrar
+    Component comp = panelContenedor.getComponent(1); // índice del panel completo
+    if (comp instanceof PanelEmpleadosCompleto) {
+        ((PanelEmpleadosCompleto) comp).llenarTabla(nominaManager);
+    }
+    cardLayout.show(panelContenedor, "fijo");
+
     }//GEN-LAST:event_btnFijoActionPerformed
 
     private void btnParcialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnParcialActionPerformed
-    cardLayout.show(panelContenedor,"parcial");
+    // Actualizar la tabla antes de mostrar
+    Component comp = panelContenedor.getComponent(2); // índice del panel parcial
+    if (comp instanceof PanelEmpleadosParcial) {
+        ((PanelEmpleadosParcial) comp).llenarTabla(nominaManager);
+    }
+    cardLayout.show(panelContenedor, "parcial");
     }//GEN-LAST:event_btnParcialActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

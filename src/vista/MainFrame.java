@@ -18,7 +18,7 @@ public class MainFrame extends javax.swing.JFrame {
     private JPanel panelContenidoPrincipal; // Panel para el contenido que cambia
 
      // Crear la instancia de Nomina, que será compartida por todos los paneles
-    private Nomina nominaManager;
+    private Nomina nominaManager = new Nomina();
     
     public MainFrame() {
         initComponents();

@@ -14,14 +14,14 @@ public class PanelEmpleadosCompleto extends javax.swing.JPanel {
 
     private JPanel panelContenedor;
     private CardLayout cardLayout;
-    private Nomina nominaManager;
+    private final Nomina nominaManager;
 
-    public PanelEmpleadosCompleto(JPanel panelContenedor, CardLayout cardLayout, Nomina nominaManager1) {
-        initComponents();
-        this.panelContenedor = panelContenedor;
-        this.cardLayout = cardLayout;
-        this.nominaManager = nominaManager;
-    }
+    public PanelEmpleadosCompleto(JPanel panelContenedor, CardLayout cardLayout, Nomina nominaManager) {
+    initComponents();
+    this.panelContenedor = panelContenedor;
+    this.cardLayout = cardLayout;
+    this.nominaManager = nominaManager; // Asignar correctamente
+}
 
     // Dentro de la clase PanelEmpleadosCompleto o PanelEmpleadosParcial
 public void llenarTabla(Nomina nominaManager) {
@@ -45,7 +45,13 @@ public void llenarTabla(Nomina nominaManager) {
 }
     
     
-    
+@Override
+public void setVisible(boolean visible) {
+    super.setVisible(visible);
+    if (visible && nominaManager != null) {
+        llenarTabla(nominaManager);
+    }
+}    
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -86,11 +92,11 @@ public void llenarTabla(Nomina nominaManager) {
 
             },
             new String [] {
-                "Nombre", "Nivel académico"
+                "Nombre", "Tipo Contrato", "Estado Civil", "Horas Trabajadas", "Salario Bruto"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
