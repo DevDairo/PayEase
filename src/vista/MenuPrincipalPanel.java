@@ -3,11 +3,13 @@ package vista;
 import java.awt.CardLayout;
 import javax.swing.JPanel;
 
+
 public class MenuPrincipalPanel extends javax.swing.JPanel {
 
     private JPanel panelContenedor;
     private CardLayout cardLayout;
-    
+
+
 
     public MenuPrincipalPanel(JPanel panelContenedor, CardLayout cardLayout) {
 
@@ -16,7 +18,7 @@ public class MenuPrincipalPanel extends javax.swing.JPanel {
         initComponents();
         this.panelContenedor = panelContenedor;
         this.cardLayout = cardLayout;
-        
+
     }
 
     // Método para navegar entre paneles - úsalo en tus botones

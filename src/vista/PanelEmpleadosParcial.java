@@ -1,21 +1,51 @@
 package vista;
 
 import java.awt.CardLayout;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
+import modelo.Empleado;
+import modelo.EmpleadoParcial;
+import servicios.Exportar;
+import servicios.Nomina;
 
-public class PanelEmpleadosServicios extends javax.swing.JPanel {
+public class PanelEmpleadosParcial extends javax.swing.JPanel {
 
     private JPanel panelContenedor;
     private CardLayout cardLayout;
+    private Nomina nominaManager;
 
-    public PanelEmpleadosServicios(JPanel panelContenedor, CardLayout cardLayout) {
+
+    public PanelEmpleadosParcial(JPanel panelContenedor, CardLayout cardLayout, Nomina nominaManager1) {
         initComponents();
 
         this.panelContenedor = panelContenedor;
         this.cardLayout = cardLayout;
-
+        this.nominaManager = nominaManager;
     }
 
+// ... dentro de la clase PanelEmpleadosParcial
+public void llenarTabla(Nomina nominaManager) {
+    DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
+    modelo.setRowCount(0); // Limpia la tabla para evitar datos duplicados
+
+    for (Empleado empleado : nominaManager.getListaEmpleados()) {
+        if (empleado instanceof EmpleadoParcial) {
+            EmpleadoParcial empleadoParcial = (EmpleadoParcial) empleado;
+            // Añade los datos del empleado parcial a la tabla
+            Object[] fila = {
+                empleadoParcial.getNombre(),
+                "Tiempo Parcial",
+                empleadoParcial.getEstadoCivil(),
+                empleadoParcial.getHorasTrabajadas(),
+                empleadoParcial.calcularSalarioBruto()
+            };
+            modelo.addRow(fila);
+        }
+    }
+}
+    
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -24,11 +54,10 @@ public class PanelEmpleadosServicios extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        exportarBtn = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tabla = new javax.swing.JTable();
 
         setBackground(new java.awt.Color(51, 255, 51));
 
@@ -53,9 +82,12 @@ public class PanelEmpleadosServicios extends javax.swing.JPanel {
 
         jLabel2.setText("Para exportar nomina en especifica, selecciona al empleado y presiona el boton");
 
-        jButton1.setText("Exportar");
-
-        jButton2.setText("Exportar todas las nóminas");
+        exportarBtn.setText("Exportar");
+        exportarBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exportarBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -65,10 +97,8 @@ public class PanelEmpleadosServicios extends javax.swing.JPanel {
                 .addGap(19, 19, 19)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addGap(237, 237, 237))
+                .addComponent(exportarBtn)
+                .addGap(335, 335, 335))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -76,13 +106,11 @@ public class PanelEmpleadosServicios extends javax.swing.JPanel {
                 .addGap(24, 24, 24)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jButton1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton2)
-                .addContainerGap(30, Short.MAX_VALUE))
+                    .addComponent(exportarBtn))
+                .addContainerGap(69, Short.MAX_VALUE))
         );
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -90,7 +118,7 @@ public class PanelEmpleadosServicios extends javax.swing.JPanel {
                 "Nombre", "Nivel académico"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tabla);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -128,15 +156,40 @@ public class PanelEmpleadosServicios extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void exportarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportarBtnActionPerformed
+   int filaSeleccionada = tabla.getSelectedRow();
+    if (filaSeleccionada == -1) {
+        JOptionPane.showMessageDialog(null, "Selecciona un empleado para exportar.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+
+    String nombreEmpleado = (String) tabla.getValueAt(filaSeleccionada, 0);
+
+    // Busca el objeto Empleado en la lista de la clase Nomina
+    Empleado empleadoAExportar = null;
+    for (Empleado empleado : nominaManager.getListaEmpleados()) {
+        if (empleado.getNombre().equals(nombreEmpleado)) {
+            empleadoAExportar = empleado;
+            break;
+        }
+    }
+
+    if (empleadoAExportar != null) {
+        // Asegúrate de que la clase Exportar esté en el paquete 'servicios'
+        Exportar exportar = new Exportar();
+        exportar.generarTXT(empleadoAExportar);
+        JOptionPane.showMessageDialog(null, "Archivo TXT generado con éxito para " + nombreEmpleado, "Exportación Exitosa", JOptionPane.INFORMATION_MESSAGE);
+    }
+    }//GEN-LAST:event_exportarBtnActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton exportarBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tabla;
     // End of variables declaration//GEN-END:variables
 }

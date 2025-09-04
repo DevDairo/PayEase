@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Dimension;
 import javax.swing.JPanel;
+import servicios.Nomina;
 
 public class MainFrame extends javax.swing.JFrame {
 
@@ -11,11 +12,14 @@ public class MainFrame extends javax.swing.JFrame {
 
     private CardLayout cardLayout;
     private MenuPrincipalPanel menuPrincipalPanel;
-    private PanelEmpleadosFijo panelEmpleadosTerminoFijo;
-    private PanelEmpleadosServicios panelEmpleadosTiempoParcial;
+    private PanelEmpleadosCompleto panelEmpleadosCompleto;
+    private PanelEmpleadosParcial panelEmpleadosParcial;
     private PanelRegistroEmpleado panelRegistroEmpleado;
     private JPanel panelContenidoPrincipal; // Panel para el contenido que cambia
 
+     // Crear la instancia de Nomina, que será compartida por todos los paneles
+    private Nomina nominaManager;
+    
     public MainFrame() {
         initComponents();
 
@@ -65,14 +69,14 @@ public class MainFrame extends javax.swing.JFrame {
         panelContenidoPrincipal = new JPanel(cardLayout);
 
         // Instanciar los paneles de contenido
-        panelRegistroEmpleado = new PanelRegistroEmpleado(panelContenidoPrincipal, cardLayout);
-        panelEmpleadosTerminoFijo = new PanelEmpleadosFijo(panelContenidoPrincipal, cardLayout);
-        panelEmpleadosTiempoParcial = new PanelEmpleadosServicios(panelContenidoPrincipal, cardLayout);
+        panelRegistroEmpleado = new PanelRegistroEmpleado(panelContenidoPrincipal, cardLayout, nominaManager);
+        panelEmpleadosCompleto = new PanelEmpleadosCompleto(panelContenidoPrincipal, cardLayout, nominaManager);
+        panelEmpleadosParcial = new PanelEmpleadosParcial(panelContenidoPrincipal, cardLayout, nominaManager);
 
         // Agregar paneles al CardLayout
         panelContenidoPrincipal.add(panelRegistroEmpleado, "registro");
-        panelContenidoPrincipal.add(panelEmpleadosTerminoFijo, "fijo");
-        panelContenidoPrincipal.add(panelEmpleadosTiempoParcial, "parcial");
+        panelContenidoPrincipal.add(panelEmpleadosCompleto, "fijo");
+        panelContenidoPrincipal.add(panelEmpleadosParcial, "parcial");
 
         // Crear dashboard (menú lateral)
         menuPrincipalPanel = new MenuPrincipalPanel(panelContenidoPrincipal, cardLayout);
