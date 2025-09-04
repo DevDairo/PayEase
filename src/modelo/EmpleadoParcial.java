@@ -28,4 +28,14 @@ public class EmpleadoParcial extends Empleado {
     public void setSalarioPorHora(double salarioPorHora) {
         this.salarioPorHora = salarioPorHora;
     }
+
+    // Para tiempo parcial solo se calcula el bruto y se informa sobre deducciones recomendadas
+    public double calcularDeduccionesRecomendadas() {
+        double salarioBruto = calcularSalarioBruto();
+        double deduccionSalud = salarioBruto * 0.04;
+        double deduccionPension = salarioBruto * 0.04;
+        double deduccionSolidaridad = salarioBruto > (1424000 * 4) ? salarioBruto * 0.01 : 0;
+        return deduccionSalud + deduccionPension + deduccionSolidaridad;
+    }
+
 }

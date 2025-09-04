@@ -30,22 +30,59 @@ public class Exportar {
             writer.write("Estado Civil: " + empleado.getEstadoCivil() + "\n");
             writer.write("Horas Trabajadas: " + empleado.getHorasTrabajadas() + " hrs\n");
 
-        // Agregar información específica del tipo de empleado
+            // Agregar información específica del tipo de empleado
+            writer.write("\n=== LIQUIDACIÓN DE NÓMINA ===\n");
+
             if (empleado instanceof EmpleadosCompletos) {
                 EmpleadosCompletos emp = (EmpleadosCompletos) empleado;
-                writer.write("Tipo de Contrato: Tiempo Completo\n");
-                writer.write("Salario Fijo Mensual: $" + df.format(emp.getSalarioFijo()) + "\n");
+                double salarioBruto = emp.calcularSalarioBruto();
+                double deducciones = emp.calcularDeducciones();
+                double salarioNeto = emp.calcularSalarioNeto();
+                double aportesEmpleador = emp.calcularAportesEmpleador();
+
+                writer.write("DEVENGADO:\n");
+                writer.write("Salario Base: $" + df.format(emp.getSalarioFijo()) + "\n");
+                writer.write("Horas Trabajadas: " + emp.getHorasTrabajadas() + " hrs\n");
+                writer.write("Salario Bruto: $" + df.format(salarioBruto) + "\n\n");
+
+                writer.write("DEDUCCIONES:\n");
+                writer.write("Salud (4%): $" + df.format(salarioBruto * 0.04) + "\n");
+                writer.write("Pensión (4%): $" + df.format(salarioBruto * 0.04) + "\n");
+                if (salarioBruto > (1424000 * 4)) {
+                    writer.write("Fondo Solidaridad (1%): $" + df.format(salarioBruto * 0.01) + "\n");
+                }
+                writer.write("Total Deducciones: $" + df.format(deducciones) + "\n\n");
+                writer.write("NETO A PAGAR: $" + df.format(salarioNeto) + "\n\n");
+
+                writer.write("=== APORTES PATRONALES ===\n");
+                writer.write("Salud (8.5%): $" + df.format(salarioBruto * 0.085) + "\n");
+                writer.write("Pensión (12%): $" + df.format(salarioBruto * 0.12) + "\n");
+                writer.write("Riesgos (0.522%): $" + df.format(salarioBruto * 0.00522) + "\n");
+                writer.write("Parafiscales (9%): $" + df.format(salarioBruto * 0.09) + "\n");
+                writer.write("Total Aportes: $" + df.format(aportesEmpleador) + "\n");
+                writer.write("COSTO TOTAL: $" + df.format(salarioBruto + aportesEmpleador) + "\n");
+
             } else if (empleado instanceof EmpleadoParcial) {
                 EmpleadoParcial emp = (EmpleadoParcial) empleado;
-                writer.write("Tipo de Contrato: Tiempo Parcial\n");
-                writer.write("Salario por Hora: $" + df.format(emp.getSalarioPorHora()) + "\n");
-            }
+                double salarioBruto = emp.calcularSalarioBruto();
+                double deduccionesRecomendadas = emp.calcularDeduccionesRecomendadas();
 
-            writer.write("\nCÁLCULOS:\n");
-            writer.write("Salario Bruto: $" + df.format(empleado.calcularSalarioBruto()) + "\n");
-            writer.write("\n*** Este recibo no incluye deducciones. ***\n");
-            writer.write("=".repeat(45) + "\n");
-            System.out.println("✓ Archivo generado: " + nombreArchivo);
+                writer.write("DEVENGADO:\n");
+                writer.write("Salario por Hora: $" + df.format(emp.getSalarioPorHora()) + "\n");
+                writer.write("Horas Trabajadas: " + emp.getHorasTrabajadas() + " hrs\n");
+                writer.write("Salario Bruto: $" + df.format(salarioBruto) + "\n\n");
+
+                writer.write("=== INFORMACIÓN TRIBUTARIA ===\n");
+                writer.write("DEDUCCIONES RECOMENDADAS:\n");
+                writer.write("Salud (4%): $" + df.format(salarioBruto * 0.04) + "\n");
+                writer.write("Pensión (4%): $" + df.format(salarioBruto * 0.04) + "\n");
+                if (salarioBruto > (1424000 * 4)) {
+                    writer.write("Fondo Solidaridad (1%): $" + df.format(salarioBruto * 0.01) + "\n");
+                }
+                writer.write("Total Recomendado: $" + df.format(deduccionesRecomendadas) + "\n");
+                writer.write("\n*** Como trabajador independiente, debe realizar\n");
+                writer.write("    estos aportes voluntariamente ***\n");
+            }
 
         } catch (IOException e) {
             System.err.println("✗ Error al generar archivo: " + e.getMessage());
