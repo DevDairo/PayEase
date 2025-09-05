@@ -5,7 +5,7 @@ public class EmpleadoParcial extends Empleado {
     // Atributo específico para empleados de tiempo parcial
     private double salarioPorHora;
 
-    // Constructor generado automáticamente por el IDE
+    // Constructor
     public EmpleadoParcial(String nombre, String estadoCivil, double horasTrabajadas, double salarioPorHora) {
         // Llama al constructor de la clase padre (Empleado)
         super(nombre, estadoCivil, horasTrabajadas);
@@ -29,7 +29,7 @@ public class EmpleadoParcial extends Empleado {
         this.salarioPorHora = salarioPorHora;
     }
 
-    // Para tiempo parcial solo se calcula el bruto y se informa sobre deducciones recomendadas
+    // Para el empleado a tiempo parcial solo se calcula el bruto y se informa sobre deducciones recomendadas.
     public double calcularDeduccionesRecomendadas() {
         double salarioBruto = calcularSalarioBruto();
         double deduccionSalud = salarioBruto * 0.04;

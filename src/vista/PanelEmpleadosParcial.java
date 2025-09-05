@@ -77,7 +77,7 @@ public class PanelEmpleadosParcial extends javax.swing.JPanel {
         });
 
         jLabel2.setFont(new java.awt.Font("Dubai", 0, 24)); // NOI18N
-        jLabel2.setText("Para exportar nomina en especifica, selecciona al empleado y presiona el boton");
+        jLabel2.setText("Para exportar nomina selecciona al empleado y presiona el boton");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -108,10 +108,10 @@ public class PanelEmpleadosParcial extends javax.swing.JPanel {
         );
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel2.setLayout(new java.awt.GridLayout());
+        jPanel2.setLayout(new java.awt.GridLayout(1, 0));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel3.setLayout(new java.awt.GridLayout());
+        jPanel3.setLayout(new java.awt.GridLayout(1, 0));
 
         tabla.setFont(new java.awt.Font("Dubai", 0, 18)); // NOI18N
         tabla.setModel(new javax.swing.table.DefaultTableModel(
@@ -128,7 +128,7 @@ public class PanelEmpleadosParcial extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 982, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)

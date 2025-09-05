@@ -98,7 +98,7 @@ public class PanelEmpleadosCompleto extends javax.swing.JPanel {
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel2.setFont(new java.awt.Font("Dubai", 0, 24)); // NOI18N
-        jLabel2.setText("Para exportar nomina en especifica, selecciona al empleado y presiona el boton");
+        jLabel2.setText("Para exportar nomina selecciona al empleado y presiona el boton");
 
         exportarBtn.setFont(new java.awt.Font("Dubai", 0, 24)); // NOI18N
         exportarBtn.setText("Exportar");

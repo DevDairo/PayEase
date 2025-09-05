@@ -13,7 +13,7 @@ public class Exportar {
     private static final DecimalFormat df = new DecimalFormat("0.00");
 
     public void generarTXT(Empleado empleado) {
-        // Generar un nombre de archivo único para cada empleado
+       
         String nombreArchivo = "nominas/" + empleado.getNombre().replace(" ", "_") + "_Nomina.txt";
 
         // Crear directorio si no existe
@@ -60,7 +60,7 @@ public class Exportar {
                 writer.write("Riesgos (0.522%): $" + df.format(salarioBruto * 0.00522) + "\n");
                 writer.write("Parafiscales (9%): $" + df.format(salarioBruto * 0.09) + "\n");
                 writer.write("Total Aportes: $" + df.format(aportesEmpleador) + "\n");
-                writer.write("COSTO TOTAL: $" + df.format(salarioBruto + aportesEmpleador) + "\n");
+                writer.write("COSTO TOTAL DE NOMINA: $" + df.format(salarioBruto + aportesEmpleador) + "\n");
 
             } else if (empleado instanceof EmpleadoParcial) {
                 EmpleadoParcial emp = (EmpleadoParcial) empleado;
