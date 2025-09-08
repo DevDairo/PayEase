@@ -3,6 +3,7 @@ package vista;
 import java.awt.CardLayout;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import modelo.Empleado;
 import modelo.EmpleadoParcial;
 import modelo.EmpleadosCompletos;
 import servicios.Nomina;
@@ -17,8 +18,17 @@ public class PanelRegistroEmpleado extends javax.swing.JPanel {
         initComponents();
         this.panelContenedor = panelContenedor;
         this.cardLayout = cardLayout;
-        this.nominaManager = nominaManager; // USAR el parámetro, NO crear nuevo
+        this.nominaManager = nominaManager; // USAR el parámetro, NO crear nuevo        
     }
+    
+    private boolean idYaExiste(String id) {
+        for (Empleado empleado : nominaManager.getListaEmpleados()) {
+            if (empleado.getId().equals(id)) {
+                return true;
+            }
+        }
+        return false;
+    }    
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -194,29 +204,37 @@ public class PanelRegistroEmpleado extends javax.swing.JPanel {
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
     // 1. Capturar los datos del formulario
     String nombreEmpleado = nombre.getText();
+    String idEmpleado = id.getText();
     String tipoContratoSeleccionado = (String) tipoContrato.getSelectedItem();
     String estadoCivilSeleccionado = (String) estadoCivil.getSelectedItem();
     String horasTrabajadasStr = horasTrabajadas.getText();
 
+
     try {
         // 2. Validar que todos los campos estén completos
-        if (nombreEmpleado.isEmpty() || tipoContratoSeleccionado == null || estadoCivilSeleccionado == null || horasTrabajadasStr.isEmpty() || Double.parseDouble(horasTrabajadasStr) <= 0) {
-            throw new Exception("Faltan datos obligatorios");
-        }
+    if (nombreEmpleado.isEmpty() || idEmpleado.isEmpty() || !idEmpleado.matches("\\d+") || tipoContratoSeleccionado == null || estadoCivilSeleccionado == null || horasTrabajadasStr.isEmpty() || !horasTrabajadasStr.matches("\\d+(\\.\\d+)?") || Double.parseDouble(horasTrabajadasStr) <= 0) {
+        throw new Exception("Ingresar números válidos para identificación y horas trabajadas");
+    }
+
+    // Verificar que el ID no este duplicado.
+    if (idYaExiste(idEmpleado)) {
+        JOptionPane.showMessageDialog(null, "El ID ya está registrado", "ID Duplicado", JOptionPane.WARNING_MESSAGE);
+        return;
+    }    
 
         double horasTrabajadasValor = Double.parseDouble(horasTrabajadasStr);
 
         // 3. Registrar según tipo de contrato
         if ("Contrato de tiempo completo".equals(tipoContratoSeleccionado)) {
             double salarioFijo = 1423500.0;
-            EmpleadosCompletos empleadoCompleto = new EmpleadosCompletos(nombreEmpleado, estadoCivilSeleccionado, horasTrabajadasValor, salarioFijo);
+        EmpleadosCompletos empleadoCompleto = new EmpleadosCompletos(nombreEmpleado, idEmpleado, estadoCivilSeleccionado, horasTrabajadasValor, salarioFijo);
             nominaManager.registrarEmpleado(empleadoCompleto);
             JOptionPane.showMessageDialog(null, "Empleado completo registrado con éxito. \n Presionando el boton empleado tiempo completo encontraras el registro de la nomina.");
 
         } else if ("Contrato de tiempo parcial".equals(tipoContratoSeleccionado)) {
            // Valor hora ordinaria mínimo: $6.189
             double salarioPorHora = 6189.0;
-            EmpleadoParcial empleadoParcial = new EmpleadoParcial(nombreEmpleado, estadoCivilSeleccionado, horasTrabajadasValor, salarioPorHora);
+        EmpleadoParcial empleadoParcial = new EmpleadoParcial(nombreEmpleado, idEmpleado, estadoCivilSeleccionado, horasTrabajadasValor, salarioPorHora);
             nominaManager.registrarEmpleado(empleadoParcial);
             JOptionPane.showMessageDialog(null, "Empleado parcial registrado con éxito.  \n Presionando el boton empleado tiempo parcial encontraras el registro de la nomina.");
 
@@ -225,16 +243,12 @@ public class PanelRegistroEmpleado extends javax.swing.JPanel {
         // 4. Limpiar formulario
         nombre.setText("");
         horasTrabajadas.setText("");
+        id.setText("");
         tipoContrato.setSelectedIndex(0);
         estadoCivil.setSelectedIndex(0);
 
     } catch (Exception ex) {
-        // Maneja tanto errores de conversión como campos vacíos
-        JOptionPane.showMessageDialog(null, "Error: Todos los campos deben estar completos y las horas deben ser un número válido.", "Error de entrada", JOptionPane.ERROR_MESSAGE);
-        nombre.setText("");
-        horasTrabajadas.setText("");
-        tipoContrato.setSelectedIndex(0);
-        estadoCivil.setSelectedIndex(0);
+        JOptionPane.showMessageDialog(null, "Ingresar números válidos para identificación y horas trabajadas", "Error de entrada", JOptionPane.ERROR_MESSAGE);
     }
     }//GEN-LAST:event_btnRegistrarActionPerformed
 

@@ -33,6 +33,7 @@ public class PanelEmpleadosParcial extends javax.swing.JPanel {
                 // Añade los datos del empleado parcial a la tabla
                 Object[] fila = {
                     empleadoParcial.getNombre(),
+                    empleadoParcial.getId(),
                     "Tiempo Parcial",
                 };
                 modelo.addRow(fila);
@@ -119,9 +120,17 @@ public class PanelEmpleadosParcial extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Nombre"
+                "Nombre", "Identificación"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(tabla);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -162,12 +171,12 @@ public class PanelEmpleadosParcial extends javax.swing.JPanel {
             return;
         }
 
-        String nombreEmpleado = (String) tabla.getValueAt(filaSeleccionada, 0);
+        String idEmpleado = (String) tabla.getValueAt(filaSeleccionada, 1);
 
-        // Busca el objeto Empleado en la lista de la clase Nomina
+        // Busca el objeto id en la lista de la clase Nomina
         Empleado empleadoAExportar = null;
         for (Empleado empleado : nominaManager.getListaEmpleados()) {
-            if (empleado.getNombre().equals(nombreEmpleado)) {
+            if (empleado.getId().equals(idEmpleado)) {
                 empleadoAExportar = empleado;
                 break;
             }
@@ -177,7 +186,7 @@ public class PanelEmpleadosParcial extends javax.swing.JPanel {
             // Asegúrate de que la clase Exportar esté en el paquete 'servicios'
             Exportar exportar = new Exportar();
             exportar.generarTXT(empleadoAExportar);
-            JOptionPane.showMessageDialog(null, "Archivo TXT generado con éxito para " + nombreEmpleado, "Exportación Exitosa", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Archivo TXT generado con éxito para " + idEmpleado, "Exportación Exitosa", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_exportarBtnActionPerformed
 

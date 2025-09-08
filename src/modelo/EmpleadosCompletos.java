@@ -10,9 +10,10 @@ public class EmpleadosCompletos extends Empleado {
     private double salarioFijo;
 
     //Constructor
-    public EmpleadosCompletos(String nombre, String estadoCivil, double horasTrabajadas, double salarioFijo) {
-        // Llama al constructor de la clase padre (Empleado)
-        super(nombre, estadoCivil, horasTrabajadas);
+    
+    
+    public EmpleadosCompletos(String nombre, String id, String estadoCivil, double horasTrabajadas, double salarioFijo) {
+        super(nombre, id, estadoCivil, horasTrabajadas);
         this.salarioFijo = salarioFijo;
     }
 

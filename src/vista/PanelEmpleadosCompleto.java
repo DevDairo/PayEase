@@ -20,20 +20,22 @@ public class PanelEmpleadosCompleto extends javax.swing.JPanel {
         initComponents();
         this.panelContenedor = panelContenedor;
         this.cardLayout = cardLayout;
-        this.nominaManager = nominaManager; // Asignar correctamente
+        this.nominaManager = nominaManager;
     }
 
-    // Dentro de la clase PanelEmpleadosCompleto o PanelEmpleadosParcial
+
     public void llenarTabla(Nomina nominaManager) {
         DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
-        modelo.setRowCount(0); // Limpia la tabla para evitar datos duplicados
+        // Limpia la tabla para evitar datos duplicados
+        modelo.setRowCount(0); 
 
         for (Empleado empleado : nominaManager.getListaEmpleados()) {
             if (empleado instanceof EmpleadosCompletos) { // o EmpleadoParcial
                 EmpleadosCompletos empleadoCompleto = (EmpleadosCompletos) empleado;
-                // Añade los datos del empleado completo a la tabla
+                // Añade los datos del empleado a la tabla
                 Object[] fila = {
                     empleadoCompleto.getNombre(),
+                    empleadoCompleto.getId(),
                     "Tiempo Completo",
                 };
                 modelo.addRow(fila);
@@ -145,11 +147,11 @@ public class PanelEmpleadosCompleto extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Nombre"
+                "Nombre", "Identificación"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false
+                false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -178,22 +180,23 @@ public class PanelEmpleadosCompleto extends javax.swing.JPanel {
             return;
         }
 
-        String nombreEmpleado = (String) tabla.getValueAt(filaSeleccionada, 0);
+        
+        String idEmpleado = (String) tabla.getValueAt(filaSeleccionada, 1);
 
-        // Busca el objeto Empleado en la lista de la clase Nomina
+        // Busca el objeto id en la lista de la clase Nomina
         Empleado empleadoAExportar = null;
         for (Empleado empleado : nominaManager.getListaEmpleados()) {
-            if (empleado.getNombre().equals(nombreEmpleado)) {
+            if (empleado.getId().equals(idEmpleado)) {
                 empleadoAExportar = empleado;
                 break;
             }
-        }
+        }        
 
         if (empleadoAExportar != null) {
             // Asegúrate de que la clase Exportar esté en el paquete 'servicios'
             Exportar exportar = new Exportar();
             exportar.generarTXT(empleadoAExportar);
-            JOptionPane.showMessageDialog(null, "Archivo TXT generado con éxito para " + nombreEmpleado, "Exportación Exitosa", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Archivo TXT generado con éxito para " + idEmpleado, "Exportación Exitosa", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_exportarBtnActionPerformed
 

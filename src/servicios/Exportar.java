@@ -14,7 +14,8 @@ public class Exportar {
 
     public void generarTXT(Empleado empleado) {
        
-        String nombreArchivo = "nominas/" + empleado.getNombre().replace(" ", "_") + "_Nomina.txt";
+    String nombreArchivo = "nominas/" + empleado.getNombre().replace(" ", "_") + "_" + empleado.getId() + "_Nomina.txt";
+
 
         // Crear directorio si no existe
         java.io.File directorio = new java.io.File("nominas");
@@ -27,6 +28,7 @@ public class Exportar {
             writer.write("Fecha: " + java.time.LocalDate.now() + "\n\n");
             writer.write("DATOS DEL EMPLEADO:\n");
             writer.write("Nombre: " + empleado.getNombre() + "\n");
+            writer.write("ID: " + empleado.getId() + "\n");
             writer.write("Estado Civil: " + empleado.getEstadoCivil() + "\n");
             writer.write("Horas Trabajadas: " + empleado.getHorasTrabajadas() + " hrs\n");
 

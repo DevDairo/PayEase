@@ -6,9 +6,8 @@ public class EmpleadoParcial extends Empleado {
     private double salarioPorHora;
 
     // Constructor
-    public EmpleadoParcial(String nombre, String estadoCivil, double horasTrabajadas, double salarioPorHora) {
-        // Llama al constructor de la clase padre (Empleado)
-        super(nombre, estadoCivil, horasTrabajadas);
+    public EmpleadoParcial(String nombre, String id, String estadoCivil, double horasTrabajadas, double salarioPorHora) {
+        super(nombre, id, estadoCivil, horasTrabajadas);
         this.salarioPorHora = salarioPorHora;
     }
 
