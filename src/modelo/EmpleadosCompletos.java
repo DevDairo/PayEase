@@ -10,8 +10,6 @@ public class EmpleadosCompletos extends Empleado {
     private double salarioFijo;
 
     //Constructor
-    
-    
     public EmpleadosCompletos(String nombre, String id, String estadoCivil, double horasTrabajadas, double salarioFijo) {
         super(nombre, id, estadoCivil, horasTrabajadas);
         this.salarioFijo = salarioFijo;

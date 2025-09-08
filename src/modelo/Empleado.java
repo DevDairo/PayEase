@@ -19,6 +19,8 @@ public abstract class Empleado {
         this.estadoCivil = estadoCivil;
         this.horasTrabajadas = horasTrabajadas;
     }
+    
+    
     /*En este método se aplica el concepto de polimorfismo. Cada tipo de empleado calculará su salario de manera diferente. Por ello, lo declaramos como abstracto, sin implementación.*/
     public abstract double calcularSalarioBruto();   
     
